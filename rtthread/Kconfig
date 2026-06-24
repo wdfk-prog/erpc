@@ -444,4 +444,61 @@ endif
 
 endmenu
 
+menu "eRPC examples"
+
+config PKG_ERPC_USING_EXAMPLE_MATRIX_MULTIPLY_UART
+    bool "Enable matrix multiply UART example"
+    default n
+    depends on PKG_ERPC_USING_SERVER
+    depends on PKG_ERPC_USING_TRANSPORT_RTTHREAD_UART
+    depends on PKG_ERPC_USING_MBF_DYNAMIC
+    depends on RT_USING_SERIAL
+    help
+        Build and automatically start the RT-Thread UART matrix multiply
+        example server. The server runs in its own thread after application
+        initialization and waits for the PC-side matrix multiply Python client
+        over the selected UART device.
+
+if PKG_ERPC_USING_EXAMPLE_MATRIX_MULTIPLY_UART
+
+config PKG_ERPC_EXAMPLE_MATRIX_MULTIPLY_UART_DEV_NAME
+    string "Matrix multiply UART device name"
+    default "uart2"
+    help
+        RT-Thread UART device name used by the matrix multiply UART example,
+        for example "uart2" or "uart3".
+
+config PKG_ERPC_EXAMPLE_MATRIX_MULTIPLY_UART_BAUDRATE
+    int "Matrix multiply UART baudrate"
+    default 115200
+    range 1 4000000
+    help
+        UART baud rate used by the matrix multiply UART example and the PC-side
+        Python client.
+
+config PKG_ERPC_EXAMPLE_MATRIX_MULTIPLY_UART_THREAD_STACK_SIZE
+    int "Matrix multiply UART server thread stack size"
+    default 4096
+    range 512 65535
+    help
+        Stack size in bytes for the example server thread.
+
+config PKG_ERPC_EXAMPLE_MATRIX_MULTIPLY_UART_THREAD_PRIORITY
+    int "Matrix multiply UART server thread priority"
+    default 20
+    range 0 255
+    help
+        RT-Thread native priority for the example server thread.
+
+config PKG_ERPC_EXAMPLE_MATRIX_MULTIPLY_UART_THREAD_TIMESLICE
+    int "Matrix multiply UART server thread timeslice"
+    default 10
+    range 1 65535
+    help
+        RT-Thread timeslice for the example server thread.
+
+endif
+
+endmenu
+
 endif
