@@ -1,0 +1,36 @@
+#
+# RT-Thread SCons build script for eRPC matrix multiply UART example.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+from building import *
+import os
+
+cwd = GetCurrentDir()
+erpc_root = os.path.normpath(os.path.join(cwd, '..', '..', '..'))
+erpc_c = os.path.join(erpc_root, 'erpc_c')
+
+src = []
+
+if GetDepend('PKG_ERPC_USING_EXAMPLE_MATRIX_MULTIPLY_UART'):
+    src += Glob('src/*.cpp')
+    src += Glob('src/service/*.cpp')
+
+CPPPATH = [
+    os.path.join(cwd, 'src'),
+    os.path.join(cwd, 'src', 'service'),
+    os.path.join(erpc_c, 'port', 'rtthread'),
+    os.path.join(erpc_c, 'port'),
+    os.path.join(erpc_root, 'rtthread'),
+    os.path.join(erpc_c, 'infra'),
+    os.path.join(erpc_c, 'setup'),
+    os.path.join(erpc_c, 'transports'),
+]
+
+group = DefineGroup('eRPC_example_matrix_multiply_uart',
+                    src,
+                    depend=['PKG_ERPC_USING_EXAMPLE_MATRIX_MULTIPLY_UART'],
+                    CPPPATH=CPPPATH)
+
+Return('group')

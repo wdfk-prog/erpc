@@ -51,6 +51,7 @@ erpc_status_t RtThreadUartTransport::init(void)
 {
     erpc_status_t status = kErpcStatus_InitFailed;
     rt_err_t err;
+    //serial v2
     struct serial_configure config = RT_SERIAL_CONFIG_DEFAULT;
 
     if (m_devName == NULL)
@@ -64,7 +65,6 @@ erpc_status_t RtThreadUartTransport::init(void)
         return status;
     }
 
-    config.rx_dma_event_mode = RT_SERIAL_RX_DMA_EVENT_NONE;
     config.rx_bufsz = ERPC_DEFAULT_BUFFER_SIZE;
     config.tx_bufsz = ERPC_DEFAULT_BUFFER_SIZE;
     config.dma_ping_bufsz = ERPC_DEFAULT_BUFFER_SIZE;

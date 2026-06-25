@@ -177,4 +177,9 @@ src = list(dict.fromkeys(src))
 
 group = DefineGroup('eRPC', src, depend=['PKG_USING_ERPC'], CPPPATH=CPPPATH)
 
+if _is_enabled('PKG_ERPC_USING_EXAMPLE_MATRIX_MULTIPLY_UART'):
+    example_sconscript = os.path.join(REPO_ROOT, 'examples', 'rtthread', 'matrix_multiply_uart', 'SConscript')
+    if os.path.exists(example_sconscript):
+        group += SConscript(example_sconscript)
+
 Return('group')
